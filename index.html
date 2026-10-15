@@ -10,6 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            overflow-x: hidden; /* Estää sivuttaisen skrollauksen */
+            width: 100%;
+        }
+        
         :root {
             --hot-pink: #ff0080;
             --dark-bg: #0f0f0f;
@@ -73,6 +83,7 @@
         .hero-container {
             position: relative;
             width: 100%;
+            max-width: 100%; /* Estää kuvaa menemästä ruudun yli */
             border-radius: 12px;
             overflow: hidden;
             margin-bottom: 40px;
@@ -82,8 +93,10 @@
         
         .hero-img {
             width: 100%;
+            max-width: 100%;
             height: auto;
             display: block;
+            object-fit: cover;
         }
         
         /* Kerros kuvan päällä: tummennus ja logon keskitys */
@@ -259,6 +272,27 @@
             clip: rect(0, 0, 0, 0) !important;
             white-space: nowrap !important;
             border: 0 !important;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            .hero-overlay {
+                padding-top: 15px;
+            }
+        
+            .logo-on-image {
+                max-width: 160px; /* Pienennetään logoa mobiilissa, jotta se on siisti yläreunassa */
+                width: 50%;
+            }
+        
+            .playlist-selector {
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch; /* Sulava skrollaus videon napeille mobiilissa */
+            }
         }
 
         [lang="en"] { display: none; }
