@@ -62,7 +62,7 @@
             cursor: pointer;
             border-radius: 4px;
             font-size: 0.8rem;
-            font-weight: 700;
+            font-weight: 700;F
             letter-spacing: 1px;
             transition: 0.3s;
         }
@@ -111,16 +111,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 60%);
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 20px;
+            justify-content: flex-start; /* Siirtää vasempaan reunaan */
+            align-items: flex-start;     /* Nostaa yläreunaan */
+            padding: 20px;               /* Jättää reunoihin tilaa */
+            box-sizing: border-box;
         }
-    
+        
         .logo-on-image {
-            max-width: 200px;
-            width: 45%;
+            max-width: 180px;
+            width: 40%;
             height: auto;
             filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.8));
         }
@@ -184,6 +185,19 @@
             color: #b0b0b0;
             margin-bottom: 15px;
             line-height: 1.5;
+        }
+
+        .poster-img {
+            width: 100%;
+            max-width: 280px; /* Rajoitetaan julisteen maksimileveys sopivan kokoiseksi */
+            height: auto;
+            max-height: 400px; /* Estetään ettei julisteesta tule liian korkea */
+            object-fit: contain; /* Säilyttää kuvan mittasuhteet täydellisesti */
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto 10px auto; /* Keskittää julisteen kortin sisälle */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
     
         /* YouTube-soitin kortin sisällä */
