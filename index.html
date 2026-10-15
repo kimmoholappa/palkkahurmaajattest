@@ -10,16 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-
+        /* 1. KAIKKIEN ELEMENTTIEN KOON LASKENTA (Erittäin tärkeä!) */
         *, *::before, *::after {
             box-sizing: border-box;
         }
-        
-        html, body {
-            overflow-x: hidden; /* Estää sivuttaisen skrollauksen */
-            width: 100%;
-        }
-        
+    
         :root {
             --hot-pink: #ff0080;
             --dark-bg: #0f0f0f;
@@ -27,7 +22,13 @@
             --text-gray: #d0d0d0;
             --border-color: #2a2a2a;
         }
-
+    
+        /* 2. RUNDUN JA BODY-ELEMENTIN LUKITUS */
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+    
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--dark-bg);
@@ -37,17 +38,22 @@
             text-align: center;
             display: flex;
             flex-direction: column;
+            align-items: center; /* Keskittää sisältösäiliöt eikä anna niiden venyä ruudun yli */
             min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
         }
-
+    
         /* Navigointi kielivalinnalla */
         nav {
-            padding: 20px 30px;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
             display: flex;
             justify-content: flex-end;
             gap: 10px;
         }
-
+    
         .lang-btn {
             background: transparent;
             border: 1px solid #444;
@@ -60,76 +66,74 @@
             letter-spacing: 1px;
             transition: 0.3s;
         }
-
+    
         .lang-btn.active {
             background-color: var(--hot-pink);
             border-color: var(--hot-pink);
             color: white;
         }
-
+    
         .lang-btn:hover:not(.active) {
             color: white;
             border-color: white;
         }
-
+    
         /* Pääsisältö */
         .container {
+            width: 100%;
             max-width: 800px;
             margin: 0 auto;
             padding: 10px 20px 80px 20px;
         }
-
-        /* Hero-säiliö (kuva + logo päällekkäin) */
+    
+        /* Hero-säiliö (Bändikuva + Logo) */
         .hero-container {
             position: relative;
             width: 100%;
-            max-width: 100%; /* Estää kuvaa menemästä ruudun yli */
             border-radius: 12px;
             overflow: hidden;
             margin-bottom: 40px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             border: 1px solid var(--border-color);
         }
-        
+    
         .hero-img {
             width: 100%;
-            max-width: 100%;
             height: auto;
             display: block;
             object-fit: cover;
         }
-        
-        /* Kerros kuvan päällä: tummennus ja logon keskitys */
+    
+        /* Logo kuvan päällä ylhäällä keskellä */
         .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 60%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%);
             display: flex;
-            justify-content: flex-start; /* Siirtää vasempaan reunaan */
-            align-items: flex-start;     /* Nostaa yläreunaan */
-            padding: 20px;               /* Jättää reunoihin tilaa */
-            box-sizing: border-box;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px;
         }
-        
-        /* Logo kuvan päällä */
+    
         .logo-on-image {
-            max-width: 180px;
-            width: 40%;
+            max-width: 200px;
+            width: 45%;
             height: auto;
             filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.8));
         }
-
+    
         /* Kuvaus */
         .description {
             font-size: 1.15rem;
             line-height: 1.8;
             margin-bottom: 50px;
             color: var(--text-gray);
+            word-break: break-word; /* Estää liian pitkien sanojen työntymisen ulos */
         }
-
+    
         /* Osio-otsikot */
         .section-title {
             text-transform: uppercase;
@@ -139,7 +143,7 @@
             margin: 50px 0 25px 0;
             font-weight: 700;
         }
-
+    
         /* Postaus-tyylinen kortti keikoille */
         .gig-post {
             background: var(--card-bg);
@@ -148,8 +152,9 @@
             padding: 25px;
             margin-bottom: 25px;
             text-align: left;
+            width: 100%;
         }
-
+    
         .gig-post-header {
             display: flex;
             justify-content: space-between;
@@ -160,36 +165,27 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-
+    
         .gig-title {
             font-size: 1.3rem;
             font-weight: 700;
             color: white;
             margin: 0;
         }
-
+    
         .gig-date {
             font-size: 0.9rem;
             color: var(--hot-pink);
             font-weight: 600;
         }
-
+    
         .gig-desc {
             font-size: 0.95rem;
             color: #b0b0b0;
             margin-bottom: 15px;
             line-height: 1.5;
         }
-
-        /* Julistekuva tulevalle keikalle */
-        .poster-img {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 8px;
-            display: block;
-            margin: 15px auto 0 auto;
-        }
-
+    
         /* YouTube-soitin kortin sisällä */
         .video-container {
             position: relative;
@@ -199,8 +195,9 @@
             border-radius: 8px;
             margin-top: 15px;
             background: #000;
+            width: 100%;
         }
-
+    
         .video-container iframe {
             position: absolute;
             top: 0;
@@ -209,7 +206,7 @@
             height: 100%;
             border: 0;
         }
-
+    
         /* Soittolistanapit videon alla */
         .playlist-selector {
             display: flex;
@@ -217,8 +214,10 @@
             margin-top: 12px;
             overflow-x: auto;
             padding-bottom: 5px;
+            width: 100%;
+            max-width: 100%;
         }
-
+    
         .playlist-btn {
             background: #252525;
             border: 1px solid #333;
@@ -229,21 +228,23 @@
             cursor: pointer;
             white-space: nowrap;
             transition: 0.2s;
+            flex-shrink: 0;
         }
-
+    
         .playlist-btn:hover, .playlist-btn.active {
             background: var(--hot-pink);
             color: white;
             border-color: var(--hot-pink);
         }
-
+    
         /* Yhteystiedot */
         .contact-box {
             padding-top: 40px;
             border-top: 1px solid var(--border-color);
             margin-top: 60px;
+            width: 100%;
         }
-
+    
         .contact-box h3 {
             text-transform: uppercase;
             font-size: 1.1rem;
@@ -252,16 +253,17 @@
             margin-bottom: 15px;
             font-weight: 700;
         }
-
+    
         .email-display {
             display: block;
             font-size: 1.5rem;
             font-weight: 700;
             margin: 10px 0;
             letter-spacing: -0.5px;
+            word-break: break-all; /* Estää sähköpostia leikkaamasta ruudun yli mobiilissa */
         }
-
-        /* Saavutettavuus: Piilotettu h1 */
+    
+        /* Saavutettavuus */
         .visually-hidden {
             position: absolute !important;
             width: 1px !important;
@@ -273,28 +275,32 @@
             white-space: nowrap !important;
             border: 0 !important;
         }
-
+    
+        /* MOBIILIHIENOSÄÄDÖT (Kännykät) */
         @media (max-width: 600px) {
             .container {
                 padding-left: 15px;
                 padding-right: 15px;
             }
-            
-            .hero-overlay {
-                padding-top: 15px;
+    
+            .gig-post {
+                padding: 18px;
             }
-        
+    
             .logo-on-image {
-                max-width: 160px; /* Pienennetään logoa mobiilissa, jotta se on siisti yläreunassa */
+                max-width: 150px;
                 width: 50%;
             }
-        
-            .playlist-selector {
-                justify-content: flex-start;
-                -webkit-overflow-scrolling: touch; /* Sulava skrollaus videon napeille mobiilissa */
+    
+            .hero-overlay {
+                padding-top: 12px;
+            }
+    
+            .email-display {
+                font-size: 1.2rem;
             }
         }
-
+    
         [lang="en"] { display: none; }
     </style>
 </head>
