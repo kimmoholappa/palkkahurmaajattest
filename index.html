@@ -421,9 +421,9 @@
 
         function changeVideo(lang, videoId, btn) {
             const player = document.getElementById('yt-player-' + lang);
-            // Käytetään youtube-nocookie.com osoitetta
             player.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1';
             
+            // Vaihda aktiivinen nappi
             const buttons = btn.parentElement.querySelectorAll('.playlist-btn');
             buttons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
