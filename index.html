@@ -2,6 +2,7 @@
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Palkkahurmaajat | Bilebändi</title>
     
@@ -317,6 +318,7 @@
                             src="https://www.youtube.com/embed/I6cabazn99Y?si=pHwvTSggYMb2-Ufb" 
                             title="YouTube video player" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            referrerpolicy="strict-origin-when-cross-origin"
                             allowfullscreen>
                     </iframe>
                 </div>
@@ -419,9 +421,9 @@
 
         function changeVideo(lang, videoId, btn) {
             const player = document.getElementById('yt-player-' + lang);
-            player.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+            // Käytetään youtube-nocookie.com osoitetta
+            player.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1';
             
-            // Vaihda aktiivinen nappi
             const buttons = btn.parentElement.querySelectorAll('.playlist-btn');
             buttons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
