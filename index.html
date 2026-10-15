@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palkkahurmaajat | Bilebändi</title>
+    
+    <!-- Montserrat-fontti -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --hot-pink: #ff0080;
+            --dark-bg: #0f0f0f;
+            --card-bg: #181818;
+            --text-gray: #d0d0d0;
+            --border-color: #2a2a2a;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navigointi kielivalinnalla */
+        nav {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid #444;
+            color: #888;
+            padding: 6px 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .lang-btn.active {
+            background-color: var(--hot-pink);
+            border-color: var(--hot-pink);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: white;
+            border-color: white;
+        }
+
+        /* Pääsisältö */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 20px 80px 20px;
+        }
+
+        /* Hero-säiliö (kuva + logo päällekkäin) */
+        .hero-container {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
+        }
+        
+        .hero-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Kerros kuvan päällä: tummennus ja logon keskitys */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Loiva tumma varjostus kuvan alareunasta/yläreunasta, jotta logo erottuu aina */
+            background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Vaihtoehtoisesti flex-end jos haluat logon alareunaan */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        /* Logo kuvan päällä */
+        .logo-on-image {
+            max-width: 320px;
+            width: 70%; /* Skaalautuu hienosti myös puhelimen ruudulla */
+            height: auto;
+            filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.7)); /* Tuo logon irti taustasta */
+        }
+
+        /* Kuvaus */
+        .description {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 50px;
+            color: var(--text-gray);
+        }
+
+        /* Osio-otsikot */
+        .section-title {
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            color: var(--hot-pink);
+            margin: 50px 0 25px 0;
+            font-weight: 700;
+        }
+
+        /* Postaus-tyylinen kortti keikoille */
+        .gig-post {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .gig-post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid #282828;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .gig-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+        }
+
+        .gig-date {
+            font-size: 0.9rem;
+            color: var(--hot-pink);
+            font-weight: 600;
+        }
+
+        .gig-desc {
+            font-size: 0.95rem;
+            color: #b0b0b0;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* Julistekuva tulevalle keikalle */
+        .poster-img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            display: block;
+            margin: 15px auto 0 auto;
+        }
+
+        /* YouTube-soitin kortin sisällä */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 kuvasuhde */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 15px;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Soittolistanapit videon alla */
+        .playlist-selector {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .playlist-btn {
+            background: #252525;
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .playlist-btn:hover, .playlist-btn.active {
+            background: var(--hot-pink);
+            color: white;
+            border-color: var(--hot-pink);
+        }
+
+        /* Yhteystiedot */
+        .contact-box {
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+
+        .contact-box h3 {
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: var(--hot-pink);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .email-display {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            letter-spacing: -0.5px;
+        }
+
+        /* Saavutettavuus: Piilotettu h1 */
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+
+        [lang="en"] { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGOINTI -->
+    <nav>
+        <button class="lang-btn active" id="btn-fi" onclick="setLang('fi')">FI</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    </nav>
+
+    <div class="container">
+        <h1 class="visually-hidden">Palkkahurmaajat - Bilebändi Oulusta</h1>
+
+        <!-- LOGO KUVAN PÄÄLLÄ (HERO-OSIO) -->
+        <div class="hero-container">
+            <img src="bandikuva.JPEG" alt="Palkkahurmaajat bändikuva" class="hero-img">
+            <div class="hero-overlay">
+                <img src="palkkahurmaajat-logo-transparent.png" alt="Palkkahurmaajat logo" class="logo-on-image">
+            </div>
+        </div>
+
+        <!-- SUOMEKSI -->
+        <div id="content-fi" lang="fi">
+            <p class="description">
+                Palkkahurmaajat on viisihenkinen oululainen kokoonpano, joka vie jalat alta tanssittavilla pop- ja rock-covereillaan. Ohjelmistossa on yleisölle tuttuja hittejä kasarilta, ysäriltä ja vuosituhannen vaihteesta – ja fiilis tuntuu ehkäpä seuraavana aamuna myös jalkapohjissaan.
+            </p>
+
+            <!-- TULEVAT KEIKAT -->
+            <div class="section-title">Tulevat keikat</div>
+            
+            <div class="gig-post">
+                <div class="gig-post-header">
+                    <h2 class="gig-title">Keikan nimi / Paikka, Oulu</h2>
+                    <span class="gig-date">Pvm tulossa 2026</span>
+                </div>
+                <p class="gig-desc">Tervetuloa juhlimaan kanssamme! Lisätiedot ja aikataulut päivittyvät pian.</p>
+                <!-- Jos sinulla on promojuliste, voit laittaa sen tähän:
+                <img src="promojuliste.jpg" alt="Keikkajuliste" class="poster-img"> 
+                -->
+            </div>
+
+            <!-- MENNEET KEIKAT & VIDEOT -->
+            <div class="section-title">Menneet keikat & Videot</div>
+
+            <!-- Elosuoja 2026 Postaus -->
+            <div class="gig-post">
+                <div class="gig-post-header">
+                    <h2 class="gig-title">Elosuoja 2026, Oulu</h2>
+                    <span class="gig-date">Elokuu 2026</span>
+                </div>
+                <p class="gig-desc">Ikimuistoinen ilta Elosuojassa! Katso keikkatunnelmia ja live-vetoja alta:</p>
+                
+                <!-- YouTube Soitin -->
+                <div class="video-container">
+                    <iframe id="yt-player-fi" 
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                            title="YouTube video player" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+
+                <!-- Videovalikko (vaihda data-video-id omiksi YouTube-videoidesi koodikoodeiksi) -->
+                <div class="playlist-selector">
+                    <button class="playlist-btn active" onclick="changeVideo('fi', 'dQw4w9WgXcQ', this)">Kappale 1</button>
+                    <button class="playlist-btn" onclick="changeVideo('fi', 'dQw4w9WgXcQ', this)">Kappale 2</button>
+                    <button class="playlist-btn" onclick="changeVideo('fi', 'dQw4w9WgXcQ', this)">Kappale 3</button>
+                </div>
+            </div>
+
+            <!-- Toinen mennyt keikka ilman videota -->
+            <div class="gig-post">
+                <div class="gig-post-header">
+                    <h2 class="gig-title">Yksityistilaisuus / Aiempi keikka</h2>
+                    <span class="gig-date">2026</span>
+                </div>
+                <p class="gig-desc" style="margin-bottom:0;">Meno oli katossa ja tanssilattia täynnä alusta loppuun.</p>
+            </div>
+
+            <!-- YHTEYSTIEDOT -->
+            <div class="contact-box">
+                <h3>Tilaa meidät juhliin</h3>
+                <span class="email-display">palkkahurmaajat@gmail.com</span>
+            </div>
+        </div>
+
+        <!-- ENGLISH -->
+        <div id="content-en" lang="en">
+            <p class="description">
+                Palkkahurmaajat is a 5-piece cover band based in Oulu, Finland. We sweep audiences off their feet with danceable pop and rock classics from the 80s, 90s, and 2000s!
+            </p>
+
+            <!-- UPCOMING GIGS -->
+            <div class="section-title">Upcoming Gigs</div>
+            
+            <div class="gig-post">
+                <div class="gig-post-header">
+                    <h2 class="gig-title">Event Name / Venue, Oulu</h2>
+                    <span class="gig-date">Coming soon 2026</span>
+                </div>
+                <p class="gig-desc">Join us for a party! Detailed schedule and info coming soon.</p>
+            </div>
+
+            <!-- PAST GIGS & VIDEOS -->
+            <div class="section-title">Past Gigs & Media</div>
+
+            <!-- Elosuoja 2026 Post -->
+            <div class="gig-post">
+                <div class="gig-post-header">
+                    <h2 class="gig-title">Elosuoja 2026, Oulu</h2>
+                    <span class="gig-date">August 2026</span>
+                </div>
+                <p class="gig-desc">An unforgettable night at Elosuoja! Check out our live performances below:</p>
+                
+                <!-- YouTube Player -->
+                <div class="video-container">
+                    <iframe id="yt-player-en" 
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                            title="YouTube video player" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="playlist-selector">
+                    <button class="playlist-btn active" onclick="changeVideo('en', 'dQw4w9WgXcQ', this)">Song 1</button>
+                    <button class="playlist-btn" onclick="changeVideo('en', 'dQw4w9WgXcQ', this)">Song 2</button>
+                    <button class="playlist-btn" onclick="changeVideo('en', 'dQw4w9WgXcQ', this)">Song 3</button>
+                </div>
+            </div>
+
+            <!-- Past gig without video -->
+            <div class="gig-post">
+                <div class="gig-post-header">
+                    <h2 class="gig-title">Private Event</h2>
+                    <span class="gig-date">2026</span>
+                </div>
+                <p class="gig-desc" style="margin-bottom:0;">High energy performance and a packed dance floor.</p>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="contact-box">
+                <h3>Book us for your event</h3>
+                <span class="email-display">palkkahurmaajat@gmail.com</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT FOR LANGUAGE AND YOUTUBE SWITCH -->
+    <script>
+        function setLang(lang) {
+            document.getElementById('content-fi').style.display = (lang === 'fi') ? 'block' : 'none';
+            document.getElementById('content-en').style.display = (lang === 'en') ? 'block' : 'none';
+            
+            document.getElementById('btn-fi').classList.toggle('active', lang === 'fi');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        }
+
+        function changeVideo(lang, videoId, btn) {
+            const player = document.getElementById('yt-player-' + lang);
+            player.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+            
+            // Vaihda aktiivinen nappi
+            const buttons = btn.parentElement.querySelectorAll('.playlist-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
